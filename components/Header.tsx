@@ -1,4 +1,4 @@
-import { cn } from "lib/utils";
+import { cn } from "~/lib/utils";
 import { useLocation } from "react-router";
 
 interface Props {

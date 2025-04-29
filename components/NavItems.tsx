@@ -1,4 +1,4 @@
-import { cn } from "lib/utils";
+import { cn } from "~/lib/utils";
 import { Link, NavLink } from "react-router";
 import { sidebarItems } from "~/constants";
 
