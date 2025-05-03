@@ -1,8 +1,16 @@
+import { Header } from 'components'
 import React from 'react'
 
 const Trips = () => {
   return (
-    <div>Trips</div>
+    <main className="dashboard wrapper">
+      <Header
+        title="Trips"
+        description="View and manage all trips AI-Generated"
+        ctaText="Create New Trip"
+        ctaLink="/trips/create"
+      />
+      </main>
   )
 }
 
