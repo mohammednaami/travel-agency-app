@@ -1,9 +1,10 @@
 import { Header, TripCard } from "components";
-import React from "react";
+import { useState } from "react";
 import { getAllTrips } from "~/appwrite/trips";
 import type { Route } from "./+types/trips";
 import { parseTripData } from "~/lib/utils";
-import type { LoaderFunctionArgs } from "react-router";
+import { useSearchParams, type LoaderFunctionArgs } from "react-router";
+import { PagerComponent } from "@syncfusion/ej2-react-grids";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const limit = 8;
@@ -23,6 +24,14 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 const Trips = ({ loaderData }: Route.ComponentProps) => {
   const trips = loaderData.trips as Trip[] | [];
+
+  const [searchParams] = useSearchParams();
+  const initialPage = Number(parseInt(searchParams.get("page") || "1"));
+  const [currentPage, setCurrentPage] = useState(initialPage);
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.location.search = `?page=${page}`;
+  };
   return (
     <main className="dashboard wrapper">
       <Header
@@ -32,8 +41,10 @@ const Trips = ({ loaderData }: Route.ComponentProps) => {
         ctaLink="/trips/create"
       />
       <section>
-        <h1 className="p-24-semibold text-dark-100">Manage Created Trips</h1>
-        <div className="trip-grid">
+        <h1 className="p-24-semibold text-dark-100 mb-4">
+          Manage Created Trips
+        </h1>
+        <div className="trip-grid mb-4">
           {trips.map((trip) => (
             <TripCard
               key={trip.id}
@@ -46,6 +57,13 @@ const Trips = ({ loaderData }: Route.ComponentProps) => {
             />
           ))}
         </div>
+        <PagerComponent
+          totalRecordsCount={loaderData.total}
+          pageSize={8}
+          currentPage={currentPage}
+          click={(args) => handlePageChange(args.currentPage)}
+          cssClass="!mb-4"
+        />
       </section>
     </main>
   );
