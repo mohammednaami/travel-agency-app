@@ -194,7 +194,42 @@ const Dashboard = ({ loaderData }: Route.ComponentProps) => {
           </SeriesCollectionDirective>
         </ChartComponent>
       </section>
-      <section className="user-trip wrapper"></section>
+      <section className="user-trip wrapper">
+        {usersAndTrips.map(({ title, dataSource, field, headerText }, i) => (
+          <div key={i} className="flex flex-col gap-5">
+            <h3 className="p-20-semibold text-dark-100">{title}</h3>
+
+            <GridComponent dataSource={dataSource} gridLines="None">
+              <ColumnsDirective>
+                <ColumnDirective
+                  field="name"
+                  headerText="Name"
+                  width="200"
+                  textAlign="Left"
+                  template={(props: UserData) => (
+                    <div className="flex items-center gap-1.5 px-4">
+                      <img
+                        src={props.imageUrl}
+                        alt="user"
+                        className="rounded-full size-8 aspect-square"
+                        referrerPolicy="no-referrer"
+                      />
+                      <span>{props.name}</span>
+                    </div>
+                  )}
+                />
+
+                <ColumnDirective
+                  field={field}
+                  headerText={headerText}
+                  width="150"
+                  textAlign="Left"
+                />
+              </ColumnsDirective>
+            </GridComponent>
+          </div>
+        ))}
+      </section>
     </main>
   );
 };
