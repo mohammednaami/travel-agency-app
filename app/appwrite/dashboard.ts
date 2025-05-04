@@ -99,6 +99,7 @@ export const getUserGrowthPerDay = async () => {
                 month: "short",
                 day: "numeric",
             });
+            
             acc[day] = (acc[day] || 0) + 1;
             return acc;
         },
