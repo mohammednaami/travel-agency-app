@@ -33,7 +33,7 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
     value: country.value,
   }));
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<TripFormData>({
     country: countries[0]?.name || "",
@@ -88,13 +88,14 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
         }),
       });
       const result: CreateTripResponse = await response.json();
-      if(result?.id){
+      if (result?.id) {
         navigate(`/trips/${result.id}`);
-      }else{
-        console.error("Trip creation failed:", result);
+      } else {
+        console.error("Trip generating failed:", result);
+        setError("Failed to create trip.:" + result);
       }
     } catch (error) {
-      console.error("Error creating trip:", error);
+      console.error("Error generating trip:", error);
       setError("Failed to create trip. Please try again.");
     } finally {
       setLoading(false);
